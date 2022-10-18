@@ -19,4 +19,8 @@
         <item name="strokeColor">@color/grey</item>
         <item name="endIconDrawable">@drawable/ic_dropdown</item>
     </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/style_spinner</item>
+    </style>
 </resources>
