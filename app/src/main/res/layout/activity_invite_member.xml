@@ -35,6 +35,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/no_curret_member"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -49,6 +50,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/no_curret_member_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100"
@@ -74,6 +76,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/no_current_supporter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -88,6 +91,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/no_current_supporter_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20"
