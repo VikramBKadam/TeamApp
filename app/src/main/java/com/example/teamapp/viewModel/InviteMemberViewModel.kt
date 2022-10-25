@@ -6,7 +6,8 @@ import com.example.teamapp.di.DefaultDispatcher
 import com.example.teamapp.di.IODispatcher
 import com.example.teamapp.di.repository.APIRepository
 import com.example.teamapp.model.Response
-import com.example.teamapp.model.TeamResponse
+import com.example.teamapp.model.Role
+import com.example.teamapp.model.Team
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
@@ -25,13 +26,13 @@ class InviteMemberViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _teamResponse: MutableSharedFlow<Response<TeamResponse>> =
+    private val _teamResponse: MutableSharedFlow<Response<Team>> =
         MutableSharedFlow(
             replay = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
 
-    val teamResponse: SharedFlow<Response<TeamResponse>> =
+    val teamResponse: SharedFlow<Response<Team>> =
         _teamResponse.asSharedFlow()
 
     suspend fun getTeam(teamId: String) =
@@ -42,5 +43,11 @@ class InviteMemberViewModel @Inject constructor(
             Log.d("CheckFlow", "responseBody: " + responseBody.toString())
             responseBody?.let { _teamResponse.emit(Response.Success(it)) }
         }
+
+    suspend fun getInvitationURL(teamId: String,role: Role){
+        withContext(ioDispatcher){
+            val response =apiRepository.getInvitation(teamId,role)
+        }
+    }
 
 }

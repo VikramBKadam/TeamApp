@@ -7,6 +7,7 @@ import com.example.teamapp.databinding.ActivityHomeScreenBinding
 
 class HomeScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeScreenBinding
+    private var usecase: Int = 0 //we have 4 useCase to test
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,12 @@ class HomeScreenActivity : AppCompatActivity() {
 
     private fun init() {
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.button.setOnClickListener { startActivity(InviteMemberActivity.newIntent(this)) }
+        binding.button.setOnClickListener {
+            if (usecase == 4) {
+                usecase = 0
+            }
+            usecase++
+            InviteMemberActivity.startActivity(this, usecase.toString())
+        }
     }
 }

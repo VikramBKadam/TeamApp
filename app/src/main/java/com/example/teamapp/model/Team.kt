@@ -1,6 +1,6 @@
 package com.example.teamapp.model
 
-data class TeamResponse(
+data class Team(
     val id: String,
     val members: Members,
     val plan: Plan

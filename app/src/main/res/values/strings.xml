@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">TeamApp</string>
-    <string-array name="fields">
-        <item> abc</item>
-        <item> cab</item>
-        <item> dac</item>
-        <item> xyx</item>
+    <string-array name="invite_permissions">
+        <item> COACH </item>
+        <item> PLAYER COACH</item>
+        <item> PLAYER </item>
+        <item> SUPPORTER </item>
     </string-array>
 </resources>

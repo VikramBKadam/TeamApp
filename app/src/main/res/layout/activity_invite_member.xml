@@ -118,8 +118,6 @@
         style="@style/SpinnerTheme"
         android:spinnerMode="dialog"
         android:tooltipText="Coach"
-        android:entries="@array/fields"
-        app:circularflow_viewCenter="@array/fields"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/invite_permission" />
