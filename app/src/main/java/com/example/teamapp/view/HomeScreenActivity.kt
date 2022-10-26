@@ -21,6 +21,7 @@ class HomeScreenActivity : AppCompatActivity() {
     private fun init() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.button.setOnClickListener {
+            // not finishing this activity so as to test the useCases when come back and click on invite
             if (usecase == 4) {
                 usecase = 0
             }

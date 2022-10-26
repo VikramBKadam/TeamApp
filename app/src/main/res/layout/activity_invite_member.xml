@@ -6,16 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".view.InviteMemberActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <include
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Invite Members"
-        app:titleCentered="true" />
+        layout="@layout/app_toolbar" />
 
     <LinearLayout
         android:id="@+id/currentNumber"
@@ -31,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Current Member"
+            android:text="@string/current_member"
             android:textSize="20sp" />
 
         <TextView
@@ -46,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Limit"
+            android:text="@string/limit"
             android:textSize="20sp" />
 
         <TextView
@@ -72,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Current Supporters"
+            android:text="@string/current_supporter"
             android:textSize="20sp" />
 
         <TextView
@@ -87,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Limit"
+            android:text="@string/limit"
             android:textSize="20sp" />
 
         <TextView
@@ -111,11 +104,11 @@
 
     <Spinner
         android:id="@+id/spinner"
+        style="@style/SpinnerTheme"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        style="@style/SpinnerTheme"
         android:spinnerMode="dialog"
         android:tooltipText="Coach"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Share QR Code"
+        android:text="@string/share_qr_code"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Copy Link"
+        android:text="@string/copy_link"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

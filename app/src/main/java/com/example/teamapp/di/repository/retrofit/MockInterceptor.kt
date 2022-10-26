@@ -10,9 +10,11 @@ class MockInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (BuildConfig.DEBUG) {
-            var responseString: String
+            val responseString: String
             val uri = chain.request().url.toUri().toString()
-            responseString = if (uri.contains("4")) {
+            responseString = if (uri.contains("invites")) {
+                INVITATION_RESPONSE
+            } else if (uri.contains("4")) {
                 SUPPORTERS_ARE_AVAILABLE_BUT_NO_OPEN_SPOT_TEAM_RESPONSE
             } else if (uri.contains("3")) {
                 ZERO_SUPPORTER_LIMIT_RESPONSE
@@ -57,6 +59,8 @@ private const val ZERO_SUPPORTER_LIMIT_RESPONSE =
 
 private const val SUPPORTERS_ARE_AVAILABLE_BUT_NO_OPEN_SPOT_TEAM_RESPONSE =
     "{\"id\":\"57994f271ca5dd20847b910c\",\"members\":{\"total\":89,\"administrators\":1,\"managers\":18,\"editors\":6,\"members\":58,\"supporters\":6},\"plan\":{\"memberLimit\":100,\"supporterLimit\":6}}"
+
+private const val INVITATION_RESPONSE ="{ \"url\": \"https://example.com/ti/eyJpbnZpdGVJZ\" }"
 
 
 

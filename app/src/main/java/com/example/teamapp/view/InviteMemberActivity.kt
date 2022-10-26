@@ -2,13 +2,19 @@ package com.example.teamapp.view
 
 
 import android.app.Activity
-import android.content.Context
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -25,37 +31,38 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class InviteMemberActivity : AppCompatActivity(), View.OnClickListener {
+class InviteMemberActivity : AppCompatActivity(), View.OnClickListener, OnItemSelectedListener {
     private val inviteMemberViewModel: InviteMemberViewModel by viewModels()
     private lateinit var binding: ActivityInviteMemberBinding
     private val TAG = InviteMemberActivity::class.java.simpleName
-    private var TEAM_ID: String? = null
+    private var teamId: String? = null
     private lateinit var spinnerArrayAdapter: SpinnerArrayAdapter
+    private var invitationUrl: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInviteMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        setSupportActionBar(binding.toolbar.toolBar)
+        binding.toolbar.toolBar.setNavigationOnClickListener { finish() }
         binding.shareQrCode.setOnClickListener(this)
         binding.copyLink.setOnClickListener(this)
+        binding.toolbar.idTextBack.setOnClickListener(this)
         observeTeamResponse()
-        TEAM_ID = intent.getStringExtra(KEY_TEAM_ID)
-
+        observeInvitationUrl()
+        teamId = intent.getStringExtra(KEY_TEAM_ID)
         getTeam()
 
     }
 
     private fun getTeam() {
         lifecycleScope.launch {
-            TEAM_ID?.let { inviteMemberViewModel.getTeam(it) }
+            teamId?.let { inviteMemberViewModel.getTeam(it) }
         }
     }
 
     private fun getInvitationUrl(role: Role) {
         lifecycleScope.launch {
-            TEAM_ID?.let { inviteMemberViewModel.getInvitationURL(it, role) }
+            teamId?.let { inviteMemberViewModel.getInvitationURL(it, role) }
         }
     }
 
@@ -63,18 +70,37 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener {
         lifecycleScope.launch(Dispatchers.Main) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 inviteMemberViewModel.teamResponse.collect { response ->
-                    Log.d(TAG, "collect response")
+                    Log.d(TAG, "collect response team$response")
                     when (response) {
                         is Response.Success -> {
                             updateUI(response.data)
 
                         }
-                        else -> {//doing nothing as response is always success
+                        else -> {
+                            //doing nothing as response is always success
                         }
                     }
                 }
             }
 
+        }
+    }
+
+    private fun observeInvitationUrl() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                inviteMemberViewModel.invitationUrlResponse.collect { response ->
+                    Log.d(TAG, "collect response invitationUrl $response")
+                    when (response) {
+                        is Response.Success -> {
+                            invitationUrl = response.data.url
+                        }
+                        else -> {
+                            //doing nothing as response is always success
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -87,6 +113,7 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener {
         if (team.plan.supporterLimit == PermissionUtils.MINIMUM_SUPPORTERS_LIMIT) {
             binding.currentSupporters.visibility = View.GONE
         }
+
         spinnerArrayAdapter = SpinnerArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -101,6 +128,8 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener {
 
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = spinnerArrayAdapter
+        binding.spinner.onItemSelectedListener = this
+
 
     }
 
@@ -116,13 +145,30 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.share_qr_code -> {
-                //  binding.spinner.selectedItem.toString()
-                getInvitationUrl(Role(binding.spinner.selectedItem.toString()))
-                // do some work here
+                invitationUrl?.let { QrCodeActivity.startActivity(this, it) }
             }
             R.id.copy_link -> {
-                // do some work here
+                copyLinkToClipboard()
+            }
+            R.id.id_text_back -> {
+                finish()
             }
         }
+    }
+
+    private fun copyLinkToClipboard() {
+        val clipboard: ClipboardManager =
+            getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("invitationUrl", invitationUrl)
+        Toast.makeText(this, "Invitation Url is copied ", Toast.LENGTH_SHORT).show()
+        clipboard.setPrimaryClip(clip)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        getInvitationUrl(PermissionUtils.getRole(binding.spinner.selectedItem.toString()))
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        getInvitationUrl(PermissionUtils.getRole(binding.spinner.selectedItem.toString()))
     }
 }

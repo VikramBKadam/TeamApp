@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">TeamApp</string>
-    <string-array name="invite_permissions">
-        <item> COACH </item>
-        <item> PLAYER COACH</item>
-        <item> PLAYER </item>
-        <item> SUPPORTER </item>
-    </string-array>
+    <string name="my_qr_code">My QR Code</string>
+    <string name="invite_member">Invite Member</string>
+    <string name="back">Back</string>
+    <string name="share_qr_code">Share QR Code</string>
+    <string name="copy_link">Copy Link</string>
+    <string name="current_member">Current Member</string>
+    <string name="limit">Limit</string>
+    <string name="current_supporter">Current Supporters</string>
 </resources>
