@@ -13,14 +13,12 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.teamapp.R
 import com.example.teamapp.databinding.ActivityInviteMemberBinding
-import com.example.teamapp.model.PermissionUtils
+import com.example.teamapp.utils.PermissionUtils
 import com.example.teamapp.model.Response
 import com.example.teamapp.model.Role
 import com.example.teamapp.model.Team

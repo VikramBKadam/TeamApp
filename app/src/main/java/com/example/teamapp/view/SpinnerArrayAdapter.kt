@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.example.teamapp.model.PermissionUtils
+import com.example.teamapp.utils.PermissionUtils
 import com.example.teamapp.model.Team
 
 

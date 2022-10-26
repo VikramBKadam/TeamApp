@@ -23,10 +23,6 @@ class MockInterceptor : Interceptor {
             } else {
                 NORMAL_TEAM_RESPONSE
             }
-            //val responseString = NORMAL_TEAM_RESPONSE
-            //val responseString = TEAM_IS_FULL_RESPONSE
-            // val responseString = ZERO_SUPPORTER_LIMIT_RESPONSE
-            //val responseString = SUPPORTERS_ARE_AVAILABLE_BUT_NO_OPEN_SPOT_TEAM_RESPONSE
 
             return Response.Builder()
                 .code(200)

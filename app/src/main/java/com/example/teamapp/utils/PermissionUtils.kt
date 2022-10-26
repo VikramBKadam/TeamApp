@@ -1,4 +1,6 @@
-package com.example.teamapp.model
+package com.example.teamapp.utils
+
+import com.example.teamapp.model.Role
 
 class PermissionUtils {
     companion object {

@@ -47,10 +47,8 @@ class InviteMemberViewModel @Inject constructor(
 
     suspend fun getTeam(teamId: String) =
         withContext(ioDispatcher) {
-            Log.d("CheckFlow", "inside getTeam")
             val response = apiRepository.getTeam(teamId)
             val responseBody = response.body()
-            Log.d("CheckFlow", "responseBody: " + responseBody.toString())
             responseBody?.let { _teamResponse.emit(Response.Success(it)) }
         }
 
@@ -58,7 +56,6 @@ class InviteMemberViewModel @Inject constructor(
         withContext(ioDispatcher) {
             val response = apiRepository.getInvitation(teamId, role)
             val responseBody = response.body()
-            Log.d("CheckFlow", "Invitation responseBody: " + responseBody.toString())
             responseBody?.let { _invitationUrlResponse.emit(Response.Success(it)) }
         }
     }
