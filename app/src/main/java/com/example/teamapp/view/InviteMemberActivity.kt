@@ -33,7 +33,7 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener, OnItemSe
     private val inviteMemberViewModel: InviteMemberViewModel by viewModels()
     private lateinit var binding: ActivityInviteMemberBinding
     private val TAG = InviteMemberActivity::class.java.simpleName
-    private var teamId: String? = null
+    private var teamId: String = "1" // (not null) default team id is 1 (first scenario)
     private lateinit var spinnerArrayAdapter: SpinnerArrayAdapter
     private var invitationUrl: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,20 +47,20 @@ class InviteMemberActivity : AppCompatActivity(), View.OnClickListener, OnItemSe
         binding.toolbar.idTextBack.setOnClickListener(this)
         observeTeamResponse()
         observeInvitationUrl()
-        teamId = intent.getStringExtra(KEY_TEAM_ID)
+        teamId = intent.getStringExtra(KEY_TEAM_ID).toString() // take value from intent to cycle through testing scenarios
         getTeam()
 
     }
 
     private fun getTeam() {
         lifecycleScope.launch {
-            teamId?.let { inviteMemberViewModel.getTeam(it) }
+            teamId.let { inviteMemberViewModel.getTeam(it) }
         }
     }
 
     private fun getInvitationUrl(role: Role) {
         lifecycleScope.launch {
-            teamId?.let { inviteMemberViewModel.getInvitationURL(it, role) }
+            teamId.let { inviteMemberViewModel.getInvitationURL(it, role) }
         }
     }
 
