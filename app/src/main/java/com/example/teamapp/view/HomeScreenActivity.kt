@@ -7,7 +7,8 @@ import com.example.teamapp.databinding.ActivityHomeScreenBinding
 
 class HomeScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeScreenBinding
-    private var usecase: Int = 0 //we have 4 useCase to test
+    private var usecase: Int = 0 // we have 4 useCase to test
+    // check mock interceptor depending on team id we will provide response
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
